@@ -18,7 +18,7 @@ module.exports = ({
     .into(tableName)
     .timeout(timeout)
 
-  const findAll = () => knex.select()
+  const findAll = () => knex.select(selectableProps)
     .from(tableName)
     .timeout(timeout)
 
@@ -32,9 +32,9 @@ module.exports = ({
     .where({ id })
     .timeout(timeout)
 
-  const update = props => knex.update(props)
+  const update = (id, props) => knex.update(props)
     .from(tableName)
-    .where({ id: props.id })
+    .where({ id })
     .timeout(timeout)
 
   const destroy = id => knex.del()

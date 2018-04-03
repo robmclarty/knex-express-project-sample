@@ -2,32 +2,75 @@
 
 const { User } = require('../models')
 
-const getUsers = () => {
-  User.find()
-    .then(users => {
-      users.forEach(user => console.log('user: ', JSON.stringify(user, null, 2)))
+const postUsers = (req, res, next) => {
+  const props = req.body.user
 
-      return users
-    })
-    .catch(err => console.log('ERROR: ', err))
+  User.create(props)
+    .then(userId => User.findById(userId))
+    .then(user => res.json({
+      ok: true,
+      message: 'User created',
+      user
+    }))
+    .catch(next)
 }
 
-const getUser = id => {
-  User.findById(id)
-    .then(user => {
-      console.log('user: ', user)
-
-      return user
-    })
-    .catch(err => console.log('ERROR: ', err))
+const getUsers = (req, res, next) => {
+  User.findAll()
+    .then(users => res.json({
+      ok: true,
+      message: 'Users found',
+      users
+    }))
+    .catch(next)
 }
 
-const createUser = user => {
-  User.create(user)
-    .then(user => {
-      console.log('created user: ', user)
+const getUser = (req, res, next) => {
+  const userId = req.params.id
 
-      return user
-    })
-    .catch(err => console.log('ERROR: ', err))
+  User.findById(userId)
+    .then(user => res.json({
+      ok: true,
+      message: 'User found',
+      user
+    }))
+    .catch(next)
+}
+
+const putUser = (req, res, next) => {
+  const userId = req.params.id
+  const props = req.body.user
+
+  User.update(userId, props)
+    .then(updateCount => Promise.all([
+      updateCount,
+      User.findById(userId)
+    ])
+    .then(([updateCount, user]) => res.json({
+      ok: true,
+      message: 'User updated',
+      user,
+      updateCount
+    }))
+    .catch(next)
+}
+
+const deleteUser = (req, res, next) => {
+  const userId = req.params.id
+
+  User.destroy(userId)
+    .then(deleteCount => res.json({
+      ok: true,
+      message: 'User deleted',
+      deleteCount
+    }))
+    .catch(next)
+}
+
+module.exports = {
+  postUsers,
+  getUsers,
+  getUser,
+  putUser,
+  deleteUser
 }
