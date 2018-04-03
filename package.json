@@ -2,7 +2,7 @@
   "name": "knex-test",
   "version": "0.0.1",
   "description": "An example knex app structure.",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "test": "ha ha, no.",
     "db:migrate": "npx knex migrate:latest",

@@ -2,7 +2,7 @@
 
 const { User } = require('../../server/models')
 
-exports.seed = (knex, Promise) => knex('users').del()
+exports.seed = (knex, Promise) => knex(User.tableName).del()
   .then(() => [
     {
       username: 'admin',

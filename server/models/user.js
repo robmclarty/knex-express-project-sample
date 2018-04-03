@@ -11,8 +11,8 @@ const selectableProps = [
   'id',
   'username',
   'email',
-  'updatedAt',
-  'createdAt'
+  'updated_at',
+  'created_at'
 ]
 
 const SALT_ROUNDS = 10
@@ -25,7 +25,7 @@ const beforeSave = user => {
   if (!user.password) return Promise.resolve(user)
 
   return hashPassword(user.password)
-    .then(hash => Object.assign({}, user, { password: hash }))
+    .then(hash => ({ ...user, password: hash }))
     .catch(err => `Error hashing password: ${ err }`)
 }
 
@@ -35,37 +35,33 @@ module.exports = knex => {
       .into(tableName)
       .timeout(1000)
     )
-    .catch(err => err)
 
   const findAll = () => knex.select()
     .from(tableName)
     .timeout(1000)
-    .catch(err => err)
 
   const find = filters => knex.select(selectableProps)
     .from(tableName)
     .where(filters)
     .timeout(1000)
-    .catch(err => err)
 
   const findById = id => knex.select(selectableProps)
     .from(tableName)
     .where({ id })
     .timeout(1000)
-    .catch(err => err)
 
   // TODO: handle updating password
   const update = props => beforeSave(props)
     .then(user => knex.update(user)
       .from(tableName)
-      .where({ id })
+      .where({ id: props.id })
+      .timeout(1000)
     )
-    .catch(err => err)
 
   const destroy = id => knex.del()
     .from(tableName)
     .where({ id })
-    .catch(err => err)
+    .timeout(1000)
 
   return {
     name,

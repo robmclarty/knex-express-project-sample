@@ -4,6 +4,7 @@ exports.up = knex => {
     t.integer('user_id').references('users.id').unsigned().index()
     t.string('name')
     t.text('description')
+    t.timestamp('completed_at')
     t.timestamp('created_at').defaultTo(knex.fn.now())
     t.timestamp('updated_at').defaultTo(knex.fn.now())
   })
