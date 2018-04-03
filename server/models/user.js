@@ -41,7 +41,7 @@ module.exports = knex => {
 
   // Augment default `create` function to include custom `beforeSave` logic.
   const create = props => beforeSave(props)
-    .then(user => modelGuts.create(user))
+    .then(user => guts.create(user))
 
   return {
     ...guts,
