@@ -5,6 +5,31 @@ the creation of a "server" JSON API using a Postgres database and creates a
 basic relation between `users` and `projects` to demonstrate how such simple
 data structures might be modeled using nothing more than Knex and plain JS.
 
+## Folder Structure
+
+```
+/config
+  database.js -- loads the knexfile using settings for the current environment
+/db
+  /migrations
+  /seeds
+/server
+  /controllers -- business logic for handling API endpoints
+    project_controller.js
+    user_controller.js
+  /helpers -- modules for common functions that sit outside controllers/models
+  /models  -- simple collections of db queries and utilities for user data
+    index.js -- creates a single object with each model as a property
+    project.js
+    user.js
+  /routes -- defines API endpoints and passes requests to corresponding controllers
+    project_routes.js
+    user_routes.js
+  index.js -- the main Express app
+knexfile.js -- defines all database settings for different environments
+package.json -- defines scripts for utilities like migrations and seeds
+```
+
 ## Why?
 
 I'm tired of ORMs. I came from a Rails background where Active Record held my
