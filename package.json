@@ -10,6 +10,9 @@
   },
   "author": "",
   "license": "MIT",
+  "engines": {
+    "node": ">=8.9.4"
+  },
   "dependencies": {
     "bcrypt": "^1.0.3",
     "knex": "^0.14.4",

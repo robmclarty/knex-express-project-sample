@@ -1,7 +1,8 @@
 'use strict'
 
 // The guts of a model that uses Knexjs to store and retrieve data from a
-// database using the provided `knex` instance.
+// database using the provided `knex` instance. Custom functionality can be
+// composed on top of this set of common guts.
 module.exports = ({
   knex = {},
   name = 'name',
