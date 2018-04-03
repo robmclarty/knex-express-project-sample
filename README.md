@@ -7,8 +7,8 @@ data structures might be modeled using nothing more than Knex and plain JS.
 
 ## Why?
 
-I'm tired of ORMs. I came from a Rails background where Active Record held your
-hand all the time, and when something went wrong you had to decipher where (in
+I'm tired of ORMs. I came from a Rails background where Active Record held my
+hand all the time, and when something went wrong I had to decipher where (in
 AR) it happened. It was a mysterious black box of goodies that helped me get
 pretty far without really understanding what was happening between my app and
 the DB.
@@ -47,6 +47,23 @@ some kind of interface (like the JSON REST API used here).
 The less you depend on, the more control you gain, and the fewer problems you
 inherit. But you also have to be more diciplined, responsible, sensible, and
 organized so as not to turn your beautiful app into a pile of spaghetti ;)
+
+## Knex
+
+I like knex because it just does what it says on the tin: it builds SQL queries.
+
+But it also comes with some handy CLI tools for running migrations and seeding
+your database (along with connecting to it in the first place from within your
+app).
+
+This is all I really wanted from an ORM. I'll structure my in-memory
+representation of my data myself. I mean, *that* is what my app *is* so how
+could an ORM know how to do it for me?
+
+I just think it makes things much more straight-forward and simple. This makes
+it obvious where something has gone wrong (so I can fix it) and makes for more
+hooks where I can easily add on additional functionality. But that's just me.
+YMMV.
 
 ## License
 
