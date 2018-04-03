@@ -1,6 +1,7 @@
 'use strict'
 
 const bcrypt = require('bcrypt')
+const createGuts = require('../helpers/model-guts')
 
 const name = 'User'
 const tableName = 'users'
@@ -15,6 +16,7 @@ const selectableProps = [
   'created_at'
 ]
 
+// Bcrypt functions used for hashing password and later verifying it.
 const SALT_ROUNDS = 10
 const hashPassword = password => bcrypt.hash(password, SALT_ROUNDS)
 const verifyPassword = (password, hash) => bcrypt.compare(password, hash)
@@ -30,47 +32,19 @@ const beforeSave = user => {
 }
 
 module.exports = knex => {
-  const create = props => beforeSave(props)
-    .then(user => knex.insert(user)
-      .into(tableName)
-      .timeout(1000)
-    )
-
-  const findAll = () => knex.select()
-    .from(tableName)
-    .timeout(1000)
-
-  const find = filters => knex.select(selectableProps)
-    .from(tableName)
-    .where(filters)
-    .timeout(1000)
-
-  const findById = id => knex.select(selectableProps)
-    .from(tableName)
-    .where({ id })
-    .timeout(1000)
-
-  // TODO: handle updating password
-  const update = props => beforeSave(props)
-    .then(user => knex.update(user)
-      .from(tableName)
-      .where({ id: props.id })
-      .timeout(1000)
-    )
-
-  const destroy = id => knex.del()
-    .from(tableName)
-    .where({ id })
-    .timeout(1000)
-
-  return {
+  const guts = createGuts({
+    knex,
     name,
     tableName,
-    create,
-    findAll,
-    find,
-    findById,
-    update,
-    destroy
+    selectableProps
+  })
+
+  // Augment default `create` function to include custom `beforeSave` logic.
+  const create = props => beforeSave(props)
+    .then(user => modelGuts.create(user))
+
+  return {
+    ...guts,
+    create
   }
 }
