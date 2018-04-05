@@ -41,7 +41,7 @@ const putUser = (req, res, next) => {
   const props = req.body.user
 
   User.update(userId, props)
-    .then((user => res.json({
+    .then(user => res.json({
       ok: true,
       message: 'User updated',
       user
@@ -55,7 +55,7 @@ const deleteUser = (req, res, next) => {
   User.destroy(userId)
     .then(deleteCount => res.json({
       ok: true,
-      message: 'User deleted',
+      message: `User '${ userId }' deleted`,
       deleteCount
     }))
     .catch(next)
