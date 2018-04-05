@@ -49,7 +49,7 @@ const putProject = (req, res, next) => {
     .then(updateCount => Promise.all([
       updateCount,
       Project.findById(projectId)
-    ])
+    ]))
     .then(([updateCount, project]) => res.json({
       ok: true,
       message: 'Project updated',
@@ -72,9 +72,9 @@ const deleteProject = (req, res, next) => {
 }
 
 module.exports = {
-  postUsers,
-  getUsers,
-  getUser,
-  putUser,
-  deleteUser
+  postProjects,
+  getProjects,
+  getProject,
+  putProject,
+  deleteProject
 }

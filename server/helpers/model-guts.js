@@ -51,6 +51,7 @@ module.exports = ({
     return knex.update(props)
       .from(tableName)
       .where({ id })
+      .returning(selectableProps)
       .timeout(timeout)
   }
 

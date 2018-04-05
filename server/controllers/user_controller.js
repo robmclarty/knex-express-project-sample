@@ -44,7 +44,7 @@ const putUser = (req, res, next) => {
     .then(updateCount => Promise.all([
       updateCount,
       User.findById(userId)
-    ])
+    ]))
     .then(([updateCount, user]) => res.json({
       ok: true,
       message: 'User updated',

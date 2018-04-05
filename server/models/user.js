@@ -56,7 +56,7 @@ module.exports = knex => {
 
         return user
       })
-      .then(user => Promise.all([user, verifyPassword(password, user.password)])
+      .then(user => Promise.all([user, verifyPassword(password, user.password)]))
       .then(([user, isMatch]) => {
         if (!isMatch) throw matchErrorMsg
 
