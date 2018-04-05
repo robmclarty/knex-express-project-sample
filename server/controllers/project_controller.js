@@ -7,7 +7,6 @@ const postProjects = (req, res, next) => {
   const props = req.body.project
 
   Project.create({ ...props, user_id: userId })
-    .then(project_id => Project.findById(project_id))
     .then(project => res.json({
       ok: true,
       message: 'Project created',

@@ -26,6 +26,7 @@ const verifyPassword = (password, hash) => bcrypt.compare(password, hash)
 const beforeSave = user => {
   if (!user.password) return Promise.resolve(user)
 
+  // `password` will always be hashed before being saved.
   return hashPassword(user.password)
     .then(hash => ({ ...user, password: hash }))
     .catch(err => `Error hashing password: ${ err }`)
@@ -43,8 +44,29 @@ module.exports = knex => {
   const create = props => beforeSave(props)
     .then(user => guts.create(user))
 
+  const verify = (username, password) => {
+    const matchErrorMsg = 'Username or password do not match'
+
+    knex.select()
+      .from(tableName)
+      .where({ username })
+      .timeout(guts.timeout)
+      .then(user => {
+        if (!user) throw matchErrorMsg
+
+        return user
+      })
+      .then(user => Promise.all([user, verifyPassword(password, user.password)])
+      .then(([user, isMatch]) => {
+        if (!isMatch) throw matchErrorMsg
+
+        return user
+      })
+  }
+
   return {
     ...guts,
-    create
+    create,
+    verify
   }
 }

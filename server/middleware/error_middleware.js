@@ -73,7 +73,6 @@ const notFound = (err, req, res, next) => {
 
 // If there's still an error at this point, return a generic 500 error.
 const genericError = (err, req, res, next) => {
-  console.log('err: ', err)
   res.status(GENERIC_ERROR).send({
     ok: false,
     message: err.message || 'Internal server error',
@@ -90,7 +89,7 @@ const catchall = (req, res, next) => {
   })
 }
 
-module.exports = {
+const exportables = {
   unauthorized,
   forbidden,
   conflict,
@@ -99,4 +98,12 @@ module.exports = {
   genericError,
   notFound,
   catchall
+}
+
+// All exportables stored as an array (e.g., for including in Express app.use())
+const all = Object.keys(exportables).map(key => exportables[key])
+
+module.exports = {
+  ...exportables,
+  all
 }

@@ -14,9 +14,14 @@ module.exports = ({
   selectableProps = [],
   timeout = 1000
 }) => {
-  const create = props => knex.insert(props)
-    .into(tableName)
-    .timeout(timeout)
+  const create = props => {
+    delete props.id // not allowed to set `id`
+
+    return knex.insert(props)
+      .returning(selectableProps)
+      .into(tableName)
+      .timeout(timeout)
+  }
 
   const findAll = () => knex.select(selectableProps)
     .from(tableName)
@@ -27,15 +32,27 @@ module.exports = ({
     .where(filters)
     .timeout(timeout)
 
+  // Same as `find` but only returns the first match if >1 are found.
+  const findOne = filters => find(filters)
+    .then(results => {
+      if (!Array.isArray(users)) return results
+
+      return results[0]
+    })
+
   const findById = id => knex.select(selectableProps)
     .from(tableName)
     .where({ id })
     .timeout(timeout)
 
-  const update = (id, props) => knex.update(props)
-    .from(tableName)
-    .where({ id })
-    .timeout(timeout)
+  const update = (id, props) => {
+    delete props.id // not allowed to set `id`
+
+    return knex.update(props)
+      .from(tableName)
+      .where({ id })
+      .timeout(timeout)
+  }
 
   const destroy = id => knex.del()
     .from(tableName)
@@ -50,6 +67,7 @@ module.exports = ({
     create,
     findAll,
     find,
+    findOne,
     findById,
     update,
     destroy

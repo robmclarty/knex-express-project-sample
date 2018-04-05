@@ -6,7 +6,6 @@ const postUsers = (req, res, next) => {
   const props = req.body.user
 
   User.create(props)
-    .then(userId => User.findById(userId))
     .then(user => res.json({
       ok: true,
       message: 'User created',
