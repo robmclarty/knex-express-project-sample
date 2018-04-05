@@ -41,15 +41,10 @@ const putUser = (req, res, next) => {
   const props = req.body.user
 
   User.update(userId, props)
-    .then(updateCount => Promise.all([
-      updateCount,
-      User.findById(userId)
-    ]))
-    .then(([updateCount, user]) => res.json({
+    .then((user => res.json({
       ok: true,
       message: 'User updated',
-      user,
-      updateCount
+      user
     }))
     .catch(next)
 }

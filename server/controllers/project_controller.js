@@ -46,15 +46,10 @@ const putProject = (req, res, next) => {
   const props = req.body.project
 
   Project.update(projectId, props)
-    .then(updateCount => Promise.all([
-      updateCount,
-      Project.findById(projectId)
-    ]))
-    .then(([updateCount, project]) => res.json({
+    .then(project => res.json({
       ok: true,
       message: 'Project updated',
-      project,
-      updateCount
+      project
     }))
     .catch(next)
 }
