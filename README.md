@@ -5,6 +5,10 @@ the creation of a "server" JSON API using a Postgres database and creates a
 basic relation between `users` and `projects` to demonstrate how such simple
 data structures might be modeled using nothing more than Knex and plain JS.
 
+If you like this kind of architecture, you may also like [cred-server](https://github.com/robmclarty/cred-server)
+which is something I'm working on as a more specific implementation of these
+ideas :)
+
 ## Folder Structure
 
 ```
