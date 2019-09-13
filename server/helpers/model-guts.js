@@ -35,7 +35,7 @@ module.exports = ({
   // Same as `find` but only returns the first match if >1 are found.
   const findOne = filters => find(filters)
     .then(results => {
-      if (!Array.isArray(users)) return results
+      if (!Array.isArray(results)) return results
 
       return results[0]
     })
