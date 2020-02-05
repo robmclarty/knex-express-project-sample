@@ -12,13 +12,13 @@
   "author": "",
   "license": "MIT",
   "engines": {
-    "node": ">=8.9.4"
+    "node": ">=12"
   },
   "dependencies": {
-    "bcrypt": "^1.0.3",
-    "body-parser": "^1.18.2",
-    "express": "^4.16.3",
-    "knex": "^0.14.4",
-    "pg": "^7.4.1"
+    "bcrypt": "3.0.8",
+    "body-parser": "1.19.0",
+    "express": "4.17.1",
+    "knex": "0.20.8",
+    "pg": "7.18.1"
   }
 }
