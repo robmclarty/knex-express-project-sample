@@ -1,6 +1,7 @@
 'use strict'
 
 // ref: https://devhints.io/knex
+// TODO: implement more dynamic env var settings loader
 module.exports = {
   development: {
     client: 'pg',
