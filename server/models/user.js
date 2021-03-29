@@ -46,8 +46,8 @@ module.exports = knex => {
 
   const verify = (username, password) => {
     const matchErrorMsg = 'Username or password do not match'
-
-    knex.select()
+    // return the result to the calling function
+    return knex.select()
       .from(tableName)
       .where({ username })
       .timeout(guts.timeout)
